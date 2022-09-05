@@ -12,7 +12,6 @@ RUN apt-get update --no-install-recommends && \
   pip install pipenv
 
 RUN apt-get install -y cron
-RUN touch /usr/src/app/logs/cron.log
 
 FROM builder as package
 
