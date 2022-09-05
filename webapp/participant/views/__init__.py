@@ -1,1 +1,1 @@
-from .refresh import refresh
+from .refresh import index, refresh

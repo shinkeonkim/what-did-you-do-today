@@ -14,13 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.http.response import HttpResponse
 from django.urls import include, path
-
-
-def index(request):
-    return HttpResponse('success')
-
+from participant.views import index
 
 urlpatterns = [
     path('', index),
