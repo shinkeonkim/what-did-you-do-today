@@ -3,7 +3,7 @@ name: refresh
 on:
   # run automatically every 6 hours
   schedule:
-    - cron: "5 15 * * *"
+    - cron: "1 15 * * *"
 
   # allows to manually run the job at any time
   workflow_dispatch:
