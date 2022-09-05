@@ -74,3 +74,8 @@ class CheckSolveJob:
             participant.failed_days_count += 1
             today_solve_log.save()
             participant.save()
+
+
+def perform_check_solve_job():
+    job = CheckSolveJob()
+    job.perform()

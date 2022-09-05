@@ -2,12 +2,16 @@ FROM python:3.9.0-slim-buster as builder
 
 WORKDIR /usr/src/app
 
+RUN mkdir -p /var/logs/
+
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 RUN apt-get update --no-install-recommends && \
   pip install --upgrade pip && \
   pip install pipenv
+
+RUN apt-get install -y cron
 
 FROM builder as package
 
@@ -30,5 +34,5 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-COPY docker-entrypoint.production.sh /docker-entrypoint.production.sh
-RUN chmod +x /docker-entrypoint.production.sh
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh

@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 
 import environ
-from config.utils import create_directory_if_not_exists, create_file_if_not_exists
+from config.utils import create_file_if_not_exists
 
 PROJECT_DIR = environ.Path(__file__) - 3
 
@@ -41,7 +41,8 @@ DJANGO_APPS = [
 ]
 
 PACKAGE_APPS = [
-    'django_extensions'
+    'django_extensions',
+    'django_crontab',
 ]
 
 PROJECT_APPS = [
@@ -128,13 +129,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'user.User'
 
-LOG_DIR_PATH = os.path.join(PROJECT_DIR, 'logs/')
-SQL_LOG_FILE_PATH = os.path.join(PROJECT_DIR, 'logs/sql_logfile.log')
-WEB_LOG_FILE_PATH = os.path.join(PROJECT_DIR, 'logs/logfile.log')
+LOG_DIR_PATH = os.path.join('/var/logs/')
+SQL_LOG_FILE_PATH = os.path.join(LOG_DIR_PATH, 'sql.log')
+WEB_LOG_FILE_PATH = os.path.join(LOG_DIR_PATH, 'webapp.log')
+CRON_LOG_FILE_PATH = os.path.join(LOG_DIR_PATH, 'cron.log')
 
-create_directory_if_not_exists(str(LOG_DIR_PATH))
 create_file_if_not_exists(str(SQL_LOG_FILE_PATH))
 create_file_if_not_exists(str(WEB_LOG_FILE_PATH))
+create_file_if_not_exists(str(CRON_LOG_FILE_PATH))
 
 LOGGING = {
     'version': 1,
@@ -183,3 +185,9 @@ LOGGING = {
         },
     },
 }
+
+CRONJOBS = [
+    # ('5 0 * * *', 'participant.jobs.perform_check_solve_job', f">> {CROM_LOG_FILE_PATH}"),
+    ('*/1 * * * *', 'participant.jobs.perform_check_solve_job', f'>> {CRON_LOG_FILE_PATH}'),
+    ('*/1 * * * *', 'participant.jobs.print_hello', f'>> {CRON_LOG_FILE_PATH}'),
+]

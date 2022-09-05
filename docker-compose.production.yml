@@ -5,6 +5,7 @@ services:
       - ./.env
     volumes:
       - ./webapp:/usr/src/app
+      - ./logs:/var/logs/
       - staticfiles:/usr/src/app/static
       - mediafiles:/usr/src/app/media
     build:

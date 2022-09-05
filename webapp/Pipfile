@@ -13,6 +13,7 @@ pillow = "==9.2.0"
 django-jazzmin = "==2.5.0"
 docutils = "==0.19"
 requests = "*"
+django-crontab = "*"
 
 [dev-packages]
 
