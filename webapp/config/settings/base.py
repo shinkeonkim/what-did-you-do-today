@@ -22,6 +22,7 @@ env = environ.Env(DEBUG=(bool, False))
 env.read_env(f'{PROJECT_DIR}/.env')
 
 SECRET_KEY = env('SECRET_KEY')
+REFRESH_KEY = env('REFRESH_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
@@ -42,7 +43,6 @@ DJANGO_APPS = [
 
 PACKAGE_APPS = [
     'django_extensions',
-    'django_crontab',
 ]
 
 PROJECT_APPS = [
@@ -132,11 +132,9 @@ AUTH_USER_MODEL = 'user.User'
 LOG_DIR_PATH = os.path.join('/var/logs/')
 SQL_LOG_FILE_PATH = os.path.join(LOG_DIR_PATH, 'sql.log')
 WEB_LOG_FILE_PATH = os.path.join(LOG_DIR_PATH, 'webapp.log')
-CRON_LOG_FILE_PATH = os.path.join(LOG_DIR_PATH, 'cron.log')
 
 create_file_if_not_exists(str(SQL_LOG_FILE_PATH))
 create_file_if_not_exists(str(WEB_LOG_FILE_PATH))
-create_file_if_not_exists(str(CRON_LOG_FILE_PATH))
 
 LOGGING = {
     'version': 1,
@@ -185,9 +183,3 @@ LOGGING = {
         },
     },
 }
-
-CRONJOBS = [
-    # ('5 0 * * *', 'participant.jobs.perform_check_solve_job', f">> {CROM_LOG_FILE_PATH}"),
-    ('* * * * *', 'participant.jobs.perform_check_solve_job', f'>> "{CRON_LOG_FILE_PATH}"'),
-    ('* * * * *', 'participant.jobs.print_hello', f'>> "{CRON_LOG_FILE_PATH}"'),
-]

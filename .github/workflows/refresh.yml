@@ -1,0 +1,20 @@
+name: refresh
+
+on:
+  # run automatically every 6 hours
+  schedule:
+    - cron: "5 15 * * *"
+
+  # allows to manually run the job at any time
+  workflow_dispatch:
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Refresh
+      uses: fjogeleit/http-request-action@v1
+      with:
+        url: '${{ secrets.API_URL }}?REFRESH_KEY=${{ secrets.REFRESH_KEY }}'
+        method: 'GET'
+        customHeaders: '{"Content-Type": "application/json"}'

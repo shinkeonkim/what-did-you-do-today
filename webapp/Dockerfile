@@ -11,8 +11,6 @@ RUN apt-get update --no-install-recommends && \
   pip install --upgrade pip && \
   pip install pipenv
 
-RUN apt-get install -y cron
-
 FROM builder as package
 
 ENV PYTHONDONTWRITEBYTECODE 1
