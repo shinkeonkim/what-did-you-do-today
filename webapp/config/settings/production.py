@@ -12,3 +12,5 @@ DATABASES = {
         'PORT': env('POSTGRES_PORT'),
     }
 }
+
+CSRF_TRUSTED_ORIGINS = ['https://*.sellon.link']
