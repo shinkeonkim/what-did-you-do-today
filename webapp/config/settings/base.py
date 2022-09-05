@@ -40,10 +40,13 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
 ]
 
-PACKAGE_APPS = []
+PACKAGE_APPS = [
+    'django_extensions'
+]
 
 PROJECT_APPS = [
     'user',
+    'participant',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PACKAGE_APPS + PROJECT_APPS
@@ -114,8 +117,6 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 STATIC_ROOT = f'{PROJECT_DIR}/static/'
-
-STATICFILES_DIRS = [f'{PROJECT_DIR}/user/staticfiles/']
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = f'{PROJECT_DIR}/media/'
