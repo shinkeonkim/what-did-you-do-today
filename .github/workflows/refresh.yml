@@ -2,7 +2,7 @@ name: refresh
 
 on:
   schedule:
-    - cron: "1 15 * * *"
+    - cron: "10 15 * * *"
 
   workflow_dispatch:
 
