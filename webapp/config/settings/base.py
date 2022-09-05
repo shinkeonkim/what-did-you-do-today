@@ -188,6 +188,6 @@ LOGGING = {
 
 CRONJOBS = [
     # ('5 0 * * *', 'participant.jobs.perform_check_solve_job', f">> {CROM_LOG_FILE_PATH}"),
-    ('*/1 * * * *', 'participant.jobs.perform_check_solve_job', f'>> {CRON_LOG_FILE_PATH}'),
-    ('*/1 * * * *', 'participant.jobs.print_hello', f'>> {CRON_LOG_FILE_PATH}'),
+    ('* * * * *', 'participant.jobs.perform_check_solve_job', f'>> "{CRON_LOG_FILE_PATH}"'),
+    ('* * * * *', 'participant.jobs.print_hello', f'>> "{CRON_LOG_FILE_PATH}"'),
 ]
