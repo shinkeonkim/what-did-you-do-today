@@ -42,7 +42,9 @@ DJANGO_APPS = [
 
 PACKAGE_APPS = []
 
-PROJECT_APPS = []
+PROJECT_APPS = [
+    'user',
+]
 
 INSTALLED_APPS = DJANGO_APPS + PACKAGE_APPS + PROJECT_APPS
 
@@ -123,6 +125,7 @@ MEDIA_ROOT = f'{PROJECT_DIR}/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+AUTH_USER_MODEL = 'user.User'
 
 LOG_DIR_PATH = os.path.join(PROJECT_DIR, 'logs/')
 SQL_LOG_FILE_PATH = os.path.join(PROJECT_DIR, 'logs/sql_logfile.log')
