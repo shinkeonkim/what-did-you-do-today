@@ -15,8 +15,12 @@ class SolveLogAdmin(admin.ModelAdmin):
         'exp',
         'standard_date',
     )
-    search_fields = (
+    list_filter = (
         'participant',
+        'standard_date',
+    )
+    search_fields = (
+        'participant__boj_handle',
     )
     ordering = (
         'participant__boj_handle',

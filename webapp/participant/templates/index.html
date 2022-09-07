@@ -26,15 +26,21 @@
 
     .container {
       max-width: 1200px;
+      padding: 1rem;
     }
 
     table {
       width: 100%;
+      text-align: center;
     }
 
-    table * {
+    table h1, th {
       color: white !important;
       background-color: #242531;
+    }
+
+    thead > tr, th {
+      padding: 1rem;
     }
 
     .dark-box {
@@ -56,32 +62,10 @@
     <section class="container">
       <section class="content box dark-box">
         <h1>
-          벌금 현황
-        </h1>
-        <table class="table is-hoverable is-striped">
-          <thead>
-            <tr>
-              <th> Handle </th>
-              <th> 벌금 누적 횟수 </th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for participant in participants %}
-              <tr>
-                <th> {{ participant.boj_handle }} </th>
-                <th> {{ participant.failed_days_count }} </th>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </section>
-
-      <section class="content box dark-box">
-        <h1>
           일일 문제 풀이 현황
         </h1>
 
-        <table class="table is-hoverable is-striped">
+        <table class="table is-hoverable is-striped is-narrow">
           <thead>
             <tr>
               <th>오늘 현황</th>
@@ -114,7 +98,17 @@
           <tbody>
             {% for id, daily_log in daily_logs %}
               <tr>
-                <th>{{ daily_log|get_item:'is_success' }}</th>
+                <th>
+                  {% if daily_log|get_item:'is_success' %}
+                    <span class="icon has-text-success">
+                      <i class="fas fa-check-square"></i>
+                    </span>
+                  {% else %}
+                    <span class="icon has-text-warning">
+                      <i class="fas fa-exclamation-triangle"></i>
+                    </span>
+                  {% endif %}
+                </th>
                 <th>{{ daily_log|get_item:'handle' }}</th>
                 <th>{{ daily_log|get_item:'total_solved_count' }}</th>
                 <th>{{ daily_log|get_item:'standard_problems_count' }}</th>
@@ -126,8 +120,29 @@
           </tbody>
         </table>
       </section>
+      <section class="content box dark-box">
+        <h1>
+          벌금 현황
+        </h1>
+        <table class="table is-hoverable is-striped is-narrow">
+          <thead>
+            <tr>
+              <th> Handle </th>
+              <th> 벌금 누적 횟수 </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for participant in participants %}
+              <tr>
+                <th> {{ participant.boj_handle }} </th>
+                <th> {{ participant.failed_days_count }} </th>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </section>
     </section>
   </main>
-
+  <script src="https://kit.fontawesome.com/189ee180a2.js" crossorigin="anonymous"></script>
 </body>
 </html>

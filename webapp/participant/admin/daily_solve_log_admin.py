@@ -12,8 +12,12 @@ class DailySolveLogAdmin(admin.ModelAdmin):
         'standard_date',
         'is_success',
     )
-    search_fields = (
+    list_filter = (
         'participant',
+        'standard_date',
+    )
+    search_fields = (
+        'participant__boj_handle',
     )
     ordering = (
         'standard_date',
