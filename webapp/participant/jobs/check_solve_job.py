@@ -86,11 +86,14 @@ class CheckSolveJob:
         today_solve_count = today_solve_log.total_solved_count - previous_solve_log.total_solved_count
         if today_solve_count < participant.standard_problems_count:
             today_solve_log.is_success = False
+            today_solve_log.save()
             if self.category == 'daily':
                 # NOTE: 하루에 한번만 체크되어야 함.
                 participant.failed_days_count += 1
+                participant.save()
+        else:
+            today_solve_log.is_success = True
             today_solve_log.save()
-            participant.save()
 
 
 def perform_check_solve_job(category: str):
