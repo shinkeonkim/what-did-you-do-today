@@ -76,6 +76,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries':{
+                'get_item': 'config.templatetags.get_item',
+            }
         },
     },
 ]
@@ -118,6 +121,10 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 STATIC_ROOT = f'{PROJECT_DIR}/static/'
+
+STATICFILES_DIRS = [
+    f'{PROJECT_DIR}/participant/badges',
+]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = f'{PROJECT_DIR}/media/'

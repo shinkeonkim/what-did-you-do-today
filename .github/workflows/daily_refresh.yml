@@ -13,6 +13,6 @@ jobs:
     - name: Refresh
       uses: fjogeleit/http-request-action@v1
       with:
-        url: '${{ secrets.API_URL }}?REFRESH_KEY=${{ secrets.REFRESH_KEY }}'
+        url: '${{ secrets.API_URL }}?REFRESH_KEY=${{ secrets.REFRESH_KEY }}&category=daily'
         method: 'GET'
         customHeaders: '{"Content-Type": "application/json"}'

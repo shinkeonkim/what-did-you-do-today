@@ -1,0 +1,18 @@
+name: refresh
+
+on:
+  schedule:
+    - cron: "30 * * * *"
+
+  workflow_dispatch:
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Refresh
+      uses: fjogeleit/http-request-action@v1
+      with:
+        url: '${{ secrets.API_URL }}?REFRESH_KEY=${{ secrets.REFRESH_KEY }}&category=hour'
+        method: 'GET'
+        customHeaders: '{"Content-Type": "application/json"}'

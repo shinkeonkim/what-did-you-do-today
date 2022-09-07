@@ -7,9 +7,14 @@ from participant.models import DailySolveLog, Participant, SolveLog
 
 
 class CheckSolveJob:
-    def __init__(self):
-        self.standard_date = now() - timedelta(days=1)
-        self.previous_date = now() - timedelta(days=2)
+    def __init__(self, category):
+        self.category = category
+        if self.category == 'hour':
+            self.standard_date = now().date()
+            self.previous_date = now().date() - timedelta(days=1)
+        else:
+            self.standard_date = now().date() - timedelta(days=1)
+            self.previous_date = now().date() - timedelta(days=2)
 
     @transaction.atomic
     def perform(self):
@@ -46,12 +51,14 @@ class CheckSolveJob:
                 )
             )
 
+        SolveLog.objects.filter(participant_id=participant_id, standard_date=self.standard_date).delete()
         SolveLog.objects.bulk_create(solve_logs)
-        DailySolveLog.objects.create(
+        daily_solve_log, _created = DailySolveLog.objects.get_or_create(
             participant_id=participant_id,
-            total_solved_count=total_solved_count,
             standard_date=self.standard_date,
         )
+        daily_solve_log.total_solved_count = total_solved_count
+        daily_solve_log.save()
 
     def check_solve(self, participant_id):
         participant = Participant.objects.filter(pk=participant_id).first()
@@ -71,11 +78,13 @@ class CheckSolveJob:
         today_solve_count = today_solve_log.total_solved_count - previous_solve_log.total_solved_count
         if today_solve_count < participant.standard_problems_count:
             today_solve_log.is_success = False
-            participant.failed_days_count += 1
+            if self.category == 'daily':
+                # NOTE: 하루에 한번만 체크되어야 함.
+                participant.failed_days_count += 1
             today_solve_log.save()
             participant.save()
 
 
-def perform_check_solve_job():
-    job = CheckSolveJob()
+def perform_check_solve_job(category: str):
+    job = CheckSolveJob(category)
     job.perform()

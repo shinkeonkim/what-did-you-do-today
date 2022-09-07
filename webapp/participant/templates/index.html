@@ -1,12 +1,133 @@
+{% load get_item %}
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <title>알고리즘 스터디</title>
+  <style>
+    html, body {
+      background-color: #191A21;
+      height: 100%;
+      width: 100%;
+    }
+
+    nav > div {
+      background-color: #2D3039;
+    }
+
+    main {
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      max-width: 1200px;
+    }
+
+    table {
+      width: 100%;
+    }
+
+    table * {
+      color: white !important;
+      background-color: #242531;
+    }
+
+    .dark-box {
+      background-color: #1B1A1D;
+    }
+
+    .dark-box h1 {
+      color: white;
+    }
+
+    .badge {
+      width: 1rem;
+    }
+  </style>
 </head>
 <body>
-  index
+  {% include '_navbar.dj.html' %}
+  <main>
+    <section class="container">
+      <section class="content box dark-box">
+        <h1>
+          벌금 현황
+        </h1>
+        <table class="table is-hoverable is-striped">
+          <thead>
+            <tr>
+              <th> Handle </th>
+              <th> 벌금 누적 횟수 </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for participant in participants %}
+              <tr>
+                <th> {{ participant.boj_handle }} </th>
+                <th> {{ participant.failed_days_count }} </th>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </section>
+
+      <section class="content box dark-box">
+        <h1>
+          일일 문제 풀이 현황
+        </h1>
+
+        <table class="table is-hoverable is-striped">
+          <thead>
+            <tr>
+              <th>오늘 현황</th>
+              <th>Handle</th>
+              <th>완료</th>
+              <th>목표량</th>
+              <th>
+                <img class="badge" src="/static/unrated.svg">
+              </th>
+              <th>
+                <img class="badge" src="/static/bronze.svg">
+              </th>
+              <th>
+                <img class="badge" src="/static/silver.svg">
+              </th>
+              <th>
+                <img class="badge" src="/static/gold.svg">
+              </th>
+              <th>
+                <img class="badge" src="/static/platinum.svg">
+              </th>
+              <th>
+                <img class="badge" src="/static/diamond.svg">
+              </th>
+              <th>
+                <img class="badge" src="/static/ruby.svg">
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for id, daily_log in daily_logs %}
+              <tr>
+                <th>{{ daily_log|get_item:'is_success' }}</th>
+                <th>{{ daily_log|get_item:'handle' }}</th>
+                <th>{{ daily_log|get_item:'total_solved_count' }}</th>
+                <th>{{ daily_log|get_item:'standard_problems_count' }}</th>
+                {% for solved_count in daily_log|get_item:'solved_count' %}
+                  <th>{{ solved_count }}</th>
+                {% endfor %}
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </section>
+    </section>
+  </main>
+
 </body>
 </html>
