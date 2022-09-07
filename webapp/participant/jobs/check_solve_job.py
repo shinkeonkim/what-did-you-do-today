@@ -18,22 +18,30 @@ class CheckSolveJob:
 
     @transaction.atomic
     def perform(self):
+        failed_handles = []
         participants = [*Participant.objects.values_list('id', 'boj_handle')]
 
         for participant_id, handle in participants:
-            self.create_solve_log(participant_id, handle)
+            failed_handle = self.create_solve_log(participant_id, handle)
+            if failed_handle:
+                failed_handles.append(failed_handle)
+                continue
             self.check_solve(participant_id)
+        return failed_handles
 
     def create_solve_log(self, participant_id, handle):
-        logs = requests.get(
-            'https://solved.ac/api/v3/user/problem_stats',
-            params={
-                'handle': handle
-            },
-            headers={
-                'Content-Type': 'application/json',
-            }
-        ).json()
+        try:
+            logs = requests.get(
+                'https://solved.ac/api/v3/user/problem_stats',
+                params={
+                    'handle': handle
+                },
+                headers={
+                    'Content-Type': 'application/json',
+                }
+            ).json()
+        except Exception:
+            return handle
 
         solve_logs = []
         total_solved_count = 0
@@ -87,4 +95,6 @@ class CheckSolveJob:
 
 def perform_check_solve_job(category: str):
     job = CheckSolveJob(category)
-    job.perform()
+    failed_handles = job.perform()
+
+    return failed_handles

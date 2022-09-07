@@ -10,8 +10,8 @@ def refresh(request):
 
     try:
         if settings.REFRESH_KEY == refresh_key:
-            perform_check_solve_job(category)
-            return HttpResponse(status=200)
+            failed_handles = perform_check_solve_job(category)
+            return HttpResponse({'failed_handles': failed_handles}, status=200)
     except IntegrityError:
         return HttpResponse(content='동일한 데이터가 있습니다.', status=401)
     return HttpResponse(content='KEY가 정확하지 않습니다.', status=401)

@@ -48,8 +48,9 @@ def index(request):
 
     for solve_log in solve_logs:
         level = solve_log.level
+        participant_id = solve_log.participant_id
         yesterday_solved_count = yesterday_solve_log_hash[participant_id][level]
-        daily_logs[today_solve_log.participant_id]['solved_count'][level_handler(level)] += solve_log.solved_count - yesterday_solved_count
+        daily_logs[participant_id]['solved_count'][level_handler(level)] += solve_log.solved_count - yesterday_solved_count
 
     return render(request, 'index.html', {'daily_logs': [*daily_logs.items()], 'participants': participants})
 
