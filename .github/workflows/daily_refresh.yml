@@ -1,4 +1,4 @@
-name: refresh
+name: daily_refresh
 
 on:
   schedule:

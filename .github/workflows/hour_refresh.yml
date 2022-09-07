@@ -1,4 +1,4 @@
-name: refresh
+name: hour_refresh
 
 on:
   schedule:
