@@ -22,6 +22,9 @@ class DailySolveLog(BaseModel):
     is_success = models.BooleanField(
         default=True,
     )
+    is_passed = models.BooleanField(
+        default=False,
+    )
 
     class Meta:
         """Meta definition for SolveLog."""

@@ -89,8 +89,9 @@ class CheckSolveJob:
             today_solve_log.save()
             if self.category == 'daily':
                 # NOTE: 하루에 한번만 체크되어야 함.
-                participant.failed_days_count += 1
-                participant.save()
+                if not today_solve_log.is_passed:
+                    participant.failed_days_count += 1
+                    participant.save()
         else:
             today_solve_log.is_success = True
             today_solve_log.save()
