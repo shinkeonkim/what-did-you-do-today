@@ -6,7 +6,7 @@ class SolveLog(BaseModel):
     participant = models.ForeignKey(
         'participant.Participant',
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
         verbose_name='참가자',
         related_name='solve_logs'
     )
