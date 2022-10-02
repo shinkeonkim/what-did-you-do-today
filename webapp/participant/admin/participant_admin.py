@@ -27,6 +27,8 @@ class ParticipantAdmin(admin.ModelAdmin):
     list_display = (
         'boj_handle',
         'failed_days_count',
+        'name',
+        'paied_failed_days_count',
     )
     search_fields = (
         'boj_handle',

@@ -129,13 +129,15 @@
             <tr>
               <th> Handle </th>
               <th> 벌금 누적 횟수 </th>
+              <th> 벌금 </th>
             </tr>
           </thead>
           <tbody>
             {% for participant in participants %}
               <tr>
                 <th> {{ participant.boj_handle }} </th>
-                <th> {{ participant.failed_days_count }} </th>
+                <th> {{ participant.monthly_failed_count }} </th>
+                <th> {{ participant.money_to_pay }} 원 </th>
               </tr>
             {% endfor %}
           </tbody>
